@@ -1,0 +1,1 @@
+- Fix string handling issue with Book and Quill in 1.21.3+

@@ -24,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * BookEdit Screen Mixin
@@ -35,9 +34,11 @@ public abstract class MixinBookEditScreen extends Screen implements ScreenContro
     @Shadow protected abstract void renderHighlight(final GuiGraphics helper, final Rect2i[] selection);
     @Shadow protected abstract void renderCursor(final GuiGraphics helper, final BookEditScreen.Pos2i pos, final boolean atEnd);
     @Shadow protected abstract BookEditScreen.DisplayCache getDisplayCache();
+    @Shadow public abstract void setCurrentPageText(final String text);
 
     @Shadow public String title;
     @Shadow @Final public TextFieldHelper titleEdit;
+    @Shadow @Final public TextFieldHelper pageEdit;
     @Shadow public Button finalizeButton;
     @Unique private WrapperBookEditScreen caramelChat$wrapper;
 
@@ -51,18 +52,9 @@ public abstract class MixinBookEditScreen extends Screen implements ScreenContro
     private void init(final CallbackInfo ci) {
         this.caramelChat$wrapper = new WrapperBookEditScreen((BookEditScreen) (Object) this);
         this.caramelChat$wrapper.setOrigin();
-    }
 
-    @ModifyArg(
-        method = "<init>",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/font/TextFieldHelper;<init>(Ljava/util/function/Supplier;Ljava/util/function/Consumer;Ljava/util/function/Supplier;Ljava/util/function/Consumer;Ljava/util/function/Predicate;)V"
-        ), index = 1
-    )
-    private Consumer<String> setCurrentPageText(final Consumer<String> consumer) {
-        return value -> {
-            consumer.accept(value);
+        this.pageEdit.setMessageFn = (value) -> {
+            this.setCurrentPageText(value);
             this.caramelChat$wrapper.setOrigin();
         };
     }
