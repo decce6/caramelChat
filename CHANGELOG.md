@@ -1,0 +1,1 @@
+- Temporary fix for sign crash issue (Fixes #34)
