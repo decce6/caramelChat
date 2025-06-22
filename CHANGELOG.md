@@ -1,1 +1,2 @@
 - Fix string handling issue with Book and Quill in 1.21.3+
+- Temporary fix for sign crash issue (Fixes #34)
