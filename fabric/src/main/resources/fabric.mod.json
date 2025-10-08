@@ -28,7 +28,7 @@
   "mixins": [ "caramelchat.mixins.json" ],
   "depends": {
     "fabricloader": ">=0.16.14",
-    "minecraft": ">=1.21.6"
+    "minecraft": ">=1.21.6 <1.21.9"
   },
   "breaks": {
     "lunar": "*",
