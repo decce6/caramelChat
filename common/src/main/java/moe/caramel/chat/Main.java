@@ -69,7 +69,7 @@ public final class Main {
      */
     public static void runOnMainThread(final Runnable runnable) {
         if (IXERIS_INSTALLED) {
-            IxerisApi.getInstance().runNowOnMainThread(runnable);
+            IxerisApi.getInstance().runOnMainThread(runnable);
         }
         else {
             runnable.run();
